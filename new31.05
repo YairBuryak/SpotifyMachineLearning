@@ -1,0 +1,629 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "f705c3b1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import spotipy \n",
+    "import spotipy.oauth2 as ouath2\n",
+    "from spotipy.oauth2 import SpotifyOAuth\n",
+    "from spotipy.oauth2 import SpotifyClientCredentials \n",
+    "import pandas as pd \n",
+    "import time "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "id": "f8027dfb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "auth_manager = SpotifyClientCredentials(client_id = 'd324d881c680454892fcd30fb1133cdf',client_secret = '3799377057814018a1afc3fafcd97fa6')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 137,
+   "id": "44e521bf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sp = spotipy.Spotify(auth_manager=auth_manager)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 128,
+   "id": "4eecf145",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "100\n",
+      "['6DCZcSspjsKoFjzjrWoCdn', '0e7ipj03S05BNilyu5bRzt', '2P91MQbaiQOfbiz9VqhqKQ', '2BgEsaKNfHUdlh97KmvFyo', '55S2PQgSMYAhgoTCcGCDfw', '285pBltuF7vW8TeWk8hdRR', '09IStsImFySgyp0pIQdqAc', '08bNPGLD8AhKpnnERrAc6G', '58q2HKrzhC3ozto2nDdN4z', '3GCdLUSnKSMJhs4Tj6CV3s', '2qT1uLXPVPzGgFOx4jtEuo', '630sXRhIcfwr2e4RdNtjKN', '7ef4DlsgrMEH11cDZd32M6', '514rhnksEwHUh6LxXsQ4Y9', '0d2iYfpKoM0QCKvcLCkBao', '7vGuf3Y35N4wmASOKLUVVU', '5Gu0PDLN4YJeW75PpBSg9p', '5OCJzvD7sykQEKHH7qAC3C', '0u2P5u6lvoDfwTYjAADbn4', '5k38wzpLb15YgncyWdTZE4', '3Vo4wInECJQuz9BIBMOu8i', '76cy1WJvNGJTj78UqeA5zr', '45Egmo7icyopuzJN0oMEdk', '0tBbt8CrmxbjRP0pueQkyU', '2dpaYNEQHiRxtZbfNsse99', '4eWQlBRaTjPPUlzacqEeoQ', '5WvAo7DNuPRmk4APhdPzi8', '52okn5MNA47tk87PeZJLEL', '4NBTZtAt1F13VvlSKe6KTl', '7dt6x5M1jzdTEt8oCbisTK', '5ZSl6gDoV6bPPxzmLeneV9', '7uzmGiiJyRfuViKKK3lVmR', '10Igtw8bSDyyFs7KIsKngZ', '6PGoSes0D9eUDeeAafB2As', '09mEdoA6zrmBPgTEN5qXmN', '4kWO6O1BUXcZmaxitpVUwp', '0Ult84lvFuqNvbyXwyRQ58', '7iDa6hUg2VgEL1o1HjmfBn', '3ee8Jmje8o58CHK66QrVC2', '3EPXxR3ImUwfayaurPi3cm', '7y9iMe8SOB6z3NoHE2OfXl', '7cwLbWHs42c8JmrW9BJZos', '1BYZxKSf0aTxp8ZFoeyM3d', '6wmAHw1szh5RCKSRjiXhPe', '6CTWathupIiDs7U4InHnDA', '7sO5G9EABYOXQKNPNiE9NR', '4w8niZpiMy6qz1mntFA5uM', '70eehEqNug7oAhozjhG21t', '5CLGzJsGqhCEECcpnFQA8x', '2QZ7WLBE8h2y1Y5Fb8RYbH', '3TgMcrV32NUKjEG2ujn9eh', '0OI7AFifLSoGzpb8bdBLLV', '3swc6WTsr7rl9DqQKQA55C', '6qNALlmZa1ESnCxJmXE1K9', '7K7MUBCnzgBAvMVW2RTWNs', '77UjLW8j5UAGAGVGhR5oUK', '4wFjTWCunQFKtukqrNijEt', '2G7V7zsVDxg1yRsu7Ew9RJ', '6NFyWDv5CjfwuzoCkw47Xf', '42fw0rxRO2xbesF6mJfd4Y', '7kQkmyoHCEqwe7QwDbkSXM', '6KBYefIoo7KydImq1uUQlL', '2xLMifQCjDGFmkHkpNLD9h', '7AFASza1mXqntmGtbxXprO', '6kPJZM97LwdG9QIsT7khp6', '2UVbBKQOdFAekPTRsnkzcf', '7fa9MBXhVfQ8P8Df9OEbD8', '58kZ9spgxmlEznXGu6FPdQ', '5IaHrVsrferBYDm0bDyABy', '1lsBTdE6MGsKeZCD6llNu7', '083Qf6hn6sFL6xiOHlZUyn', '0CZ8lquoTX2Dkg7Ak2inwA', '0JP9xo3adEtGSdUEISiszL', '01k24g94i1JvkFLQmVEdCd', '2z4pcBLQXF2BXKFvd0BuB6', '3T9CfDxFYqZWSKxd0BhZrb', '2RiBogNRfulkNf7fVbPOrJ', '6n4U3TlzUGhdSFbUUhTvLP', '15DwFznkBJir7AK9PyMyRR', '6VrCmhRBFnuGKmtNfk4jDs', '1HagMz5nWk1HmevNCBOxF3', '2l8nEO0vsTRCRnGqQty6qx', '1xzBco0xcoJEDXktl7Jxrr', '2Yl4OmDby9iitgNWZPwxkd', '6vN77lE9LK6HP2DewaN6HZ', '66xn6tB8s3l8uhj02OGneE', '4ofwffwvvnbSkrMSCKQDaC', '4EAV2cKiqKP5UPZmY6dejk', '0At2qAoaVjIwWNAqrscXli', '3CA9pLiwRIGtUBiMjbZmRw', '1cS0TgbR263ey9jn0MwD2s', '4ylWMuGbMXNDgDd8lErEle', '5xzCzOAOfRi4DOttSzvznR', '4L9Ds4mpD3SuYoWwFUlv16', '7HdZY9UJTylIiNcSDFyUDc', '2xGjteMU3E1tkEPVFBO08U', '4PzsYXrHh4r2BxtpNjtvoF', '51rXHuKN8Loc4sUlKPODgH', '3CWuU5kIw8zsWJTcgreUwl', '0TlLq3lA83rQOYtrqBqSct']\n"
+     ]
+    }
+   ],
+   "source": [
+    "def getTrackIDs(user, playlist_id):\n",
+    "    track_ids = []\n",
+    "    playlist = sp.user_playlist (user,playlist_id)\n",
+    "    for item in playlist['tracks']['items']:\n",
+    "        track=item['track']\n",
+    "        track_ids.append(track['id'])\n",
+    "    return track_ids\n",
+    "                      \n",
+    "track_ids = getTrackIDs('spotify','37i9dQZF1DXe2bobNYDtW8')\n",
+    "                      \n",
+    "print(len(track_ids))\n",
+    "print(track_ids)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 129,
+   "id": "ad5cb390",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def getTrackFeatures(id):\n",
+    "    track_info=sp.track(id)\n",
+    "    features_info= sp.audio_features(id)\n",
+    "    \n",
+    "    \n",
+    "    name = track_info['name']\n",
+    "    album = track_info['album']['name']\n",
+    "    artist = track_info['album']['artists'][0]['name']\n",
+    "    release_date = track_info['album']['release_date']\n",
+    "    length = track_info['duration_ms']\n",
+    "    popularity = track_info['popularity']\n",
+    "    \n",
+    "\n",
+    "\n",
+    "    acousticness = features_info[0]['acousticness']\n",
+    "    danceability = features_info[0]['danceability']\n",
+    "    energy = features_info[0]['energy']\n",
+    "    instrumentalness = features_info[0]['instrumentalness']\n",
+    "    liveness = features_info[0]['liveness']\n",
+    "    loudness = features_info[0]['loudness']\n",
+    "    speechiness = features_info[0]['speechiness']\n",
+    "    tempo = features_info[0]['tempo']\n",
+    "    time_signature = features_info[0]['time_signature']\n",
+    "    key = features_info[0]['key']\n",
+    "    duration_ms = features_info[0]['duration_ms']\n",
+    "    mode = features_info[0]['mode']\n",
+    "    speechiness = features_info[0]['speechiness']\n",
+    "    valence = features_info[0]['valence']\n",
+    "    \n",
+    "    track_data = [name,album,artist,release_date,length,popularity,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,tempo,time_signature,key,duration_ms,mode,speechiness,valence]\n",
+    "    return track_data \n",
+    "    \n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 130,
+   "id": "2e7fd0aa",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Name</th>\n",
+       "      <th>Album</th>\n",
+       "      <th>Artist</th>\n",
+       "      <th>Release_date</th>\n",
+       "      <th>Length</th>\n",
+       "      <th>Popularity</th>\n",
+       "      <th>Acousticness</th>\n",
+       "      <th>Danceability</th>\n",
+       "      <th>Energy</th>\n",
+       "      <th>Instrumentalness</th>\n",
+       "      <th>liveness</th>\n",
+       "      <th>Loudness</th>\n",
+       "      <th>Speechiness</th>\n",
+       "      <th>Tempo</th>\n",
+       "      <th>Time_signature</th>\n",
+       "      <th>Key</th>\n",
+       "      <th>Duration_ms</th>\n",
+       "      <th>Mode</th>\n",
+       "      <th>Speechiness</th>\n",
+       "      <th>Valence</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>God's Plan</td>\n",
+       "      <td>Scorpion</td>\n",
+       "      <td>Drake</td>\n",
+       "      <td>2018-06-29</td>\n",
+       "      <td>198973</td>\n",
+       "      <td>81</td>\n",
+       "      <td>0.0332</td>\n",
+       "      <td>0.754</td>\n",
+       "      <td>0.449</td>\n",
+       "      <td>0.000083</td>\n",
+       "      <td>0.552</td>\n",
+       "      <td>-9.211</td>\n",
+       "      <td>0.1090</td>\n",
+       "      <td>77.169</td>\n",
+       "      <td>4</td>\n",
+       "      <td>7</td>\n",
+       "      <td>198973</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.1090</td>\n",
+       "      <td>0.357</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>rockstar (feat. 21 Savage)</td>\n",
+       "      <td>beerbongs &amp; bentleys</td>\n",
+       "      <td>Post Malone</td>\n",
+       "      <td>2018-04-27</td>\n",
+       "      <td>218146</td>\n",
+       "      <td>83</td>\n",
+       "      <td>0.1240</td>\n",
+       "      <td>0.585</td>\n",
+       "      <td>0.520</td>\n",
+       "      <td>0.000070</td>\n",
+       "      <td>0.131</td>\n",
+       "      <td>-6.136</td>\n",
+       "      <td>0.0712</td>\n",
+       "      <td>159.801</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
+       "      <td>218147</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.0712</td>\n",
+       "      <td>0.129</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>I Like Me Better</td>\n",
+       "      <td>I met you when I was 18. (the playlist)</td>\n",
+       "      <td>Lauv</td>\n",
+       "      <td>2018-05-31</td>\n",
+       "      <td>197436</td>\n",
+       "      <td>81</td>\n",
+       "      <td>0.5350</td>\n",
+       "      <td>0.752</td>\n",
+       "      <td>0.505</td>\n",
+       "      <td>0.000003</td>\n",
+       "      <td>0.104</td>\n",
+       "      <td>-7.621</td>\n",
+       "      <td>0.2530</td>\n",
+       "      <td>91.970</td>\n",
+       "      <td>4</td>\n",
+       "      <td>9</td>\n",
+       "      <td>197437</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.2530</td>\n",
+       "      <td>0.419</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2002</td>\n",
+       "      <td>Speak Your Mind (Deluxe)</td>\n",
+       "      <td>Anne-Marie</td>\n",
+       "      <td>2018-04-27</td>\n",
+       "      <td>186986</td>\n",
+       "      <td>80</td>\n",
+       "      <td>0.0372</td>\n",
+       "      <td>0.697</td>\n",
+       "      <td>0.683</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.137</td>\n",
+       "      <td>-2.881</td>\n",
+       "      <td>0.1170</td>\n",
+       "      <td>96.133</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>186987</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.1170</td>\n",
+       "      <td>0.603</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Youngblood</td>\n",
+       "      <td>Youngblood</td>\n",
+       "      <td>5 Seconds of Summer</td>\n",
+       "      <td>2018-04-12</td>\n",
+       "      <td>203417</td>\n",
+       "      <td>68</td>\n",
+       "      <td>0.0169</td>\n",
+       "      <td>0.596</td>\n",
+       "      <td>0.854</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.124</td>\n",
+       "      <td>-5.114</td>\n",
+       "      <td>0.4630</td>\n",
+       "      <td>120.274</td>\n",
+       "      <td>4</td>\n",
+       "      <td>7</td>\n",
+       "      <td>203418</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.4630</td>\n",
+       "      <td>0.152</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                         Name                                    Album  \\\n",
+       "0                  God's Plan                                 Scorpion   \n",
+       "1  rockstar (feat. 21 Savage)                     beerbongs & bentleys   \n",
+       "2            I Like Me Better  I met you when I was 18. (the playlist)   \n",
+       "3                        2002                 Speak Your Mind (Deluxe)   \n",
+       "4                  Youngblood                               Youngblood   \n",
+       "\n",
+       "                Artist Release_date  Length  Popularity  Acousticness  \\\n",
+       "0                Drake   2018-06-29  198973          81        0.0332   \n",
+       "1          Post Malone   2018-04-27  218146          83        0.1240   \n",
+       "2                 Lauv   2018-05-31  197436          81        0.5350   \n",
+       "3           Anne-Marie   2018-04-27  186986          80        0.0372   \n",
+       "4  5 Seconds of Summer   2018-04-12  203417          68        0.0169   \n",
+       "\n",
+       "   Danceability  Energy  Instrumentalness  liveness  Loudness  Speechiness  \\\n",
+       "0         0.754   0.449          0.000083     0.552    -9.211       0.1090   \n",
+       "1         0.585   0.520          0.000070     0.131    -6.136       0.0712   \n",
+       "2         0.752   0.505          0.000003     0.104    -7.621       0.2530   \n",
+       "3         0.697   0.683          0.000000     0.137    -2.881       0.1170   \n",
+       "4         0.596   0.854          0.000000     0.124    -5.114       0.4630   \n",
+       "\n",
+       "     Tempo  Time_signature  Key  Duration_ms  Mode  Speechiness  Valence  \n",
+       "0   77.169               4    7       198973     1       0.1090    0.357  \n",
+       "1  159.801               4    5       218147     0       0.0712    0.129  \n",
+       "2   91.970               4    9       197437     1       0.2530    0.419  \n",
+       "3   96.133               4    1       186987     0       0.1170    0.603  \n",
+       "4  120.274               4    7       203418     0       0.4630    0.152  "
+      ]
+     },
+     "execution_count": 130,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "track_list = []\n",
+    "for i in range(len(track_ids)):\n",
+    "    time.sleep(.3)\n",
+    "    track_data = getTrackFeatures(track_ids[i])\n",
+    "    track_list.append(track_data)\n",
+    "    \n",
+    "most_streams = pd.DataFrame(track_list,columns = ['Name','Album','Artist','Release_date','Length','Popularity',\n",
+    "                                                  'Acousticness','Danceability','Energy','Instrumentalness','liveness',\n",
+    "                                                  'Loudness','Speechiness','Tempo','Time_signature','Key','Duration_ms','Mode','Speechiness','Valence'])   \n",
+    "most_streams.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 131,
+   "id": "c0a44630",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "most_streams.to_csv(r'C:\\Users\\iyair\\Desktop\\Song Project\\CSV_FILES_NEW\\top2018.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 132,
+   "id": "225f5299",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import glob\n",
+    "import os "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 134,
+   "id": "349890ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "files = os.path.join(\"C:\\\\Users\\\\iyair\\\\Desktop\\\\Song Project\\\\CSV_FILES_NEW\",\"top****.csv\")\n",
+    "files = glob.glob(files)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 135,
+   "id": "58261f2b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "      Unnamed: 0                                               Name  \\\n",
+      "0              0  It Must Have Been Love - From the Film \"Pretty...   \n",
+      "1              1                                       Freedom! '90   \n",
+      "2              2                               Nothing Compares 2 U   \n",
+      "3              3                                      Kingston Town   \n",
+      "4              4                                      Thunderstruck   \n",
+      "...          ...                                                ...   \n",
+      "3140          40                                             Fiamme   \n",
+      "3141          41                                  Lost In Singapore   \n",
+      "3142          42                                            MARTEDÌ   \n",
+      "3143          43                                           Notturno   \n",
+      "3144          44                                        Fiato corto   \n",
+      "\n",
+      "                                                  Album           Artist  \\\n",
+      "0                                It Must Have Been Love          Roxette   \n",
+      "1     Ladies And Gentlemen... The Best Of George Mic...   George Michael   \n",
+      "2                      I Do Not Want What I Haven't Got  Sinéad O'Connor   \n",
+      "3                                     Labour Of Love II             UB40   \n",
+      "4                                       The Razors Edge            AC/DC   \n",
+      "...                                                 ...              ...   \n",
+      "3140                                             Fiamme            BLUEM   \n",
+      "3141                                  Lost In Singapore           Tropea   \n",
+      "3142                                            MARTEDÌ            BLUEM   \n",
+      "3143                                           Notturno           ceneri   \n",
+      "3144                                        Fiato corto           ceneri   \n",
+      "\n",
+      "     Release_date  Length  Popularity  Acousticness  Danceability  Energy  \\\n",
+      "0      1990-05-20  258786          73      0.340000         0.520   0.652   \n",
+      "1      1998-11-09  388400          57      0.099800         0.675   0.873   \n",
+      "2      1990-07-01  280040          70      0.042500         0.511   0.574   \n",
+      "3      1989-01-01  231733          66      0.119000         0.957   0.226   \n",
+      "4      1990-09-24  292880          81      0.000147         0.502   0.890   \n",
+      "...           ...     ...         ...           ...           ...     ...   \n",
+      "3140   2021-11-18  238666          44      0.237000         0.871   0.683   \n",
+      "3141   2018-06-08  205000          40      0.007330         0.655   0.515   \n",
+      "3142   2021-03-30  196992          41      0.717000         0.745   0.317   \n",
+      "3143   2022-01-20  148650          46      0.916000         0.417   0.282   \n",
+      "3144   2021-10-21  198728          40      0.901000         0.293   0.329   \n",
+      "\n",
+      "      ...  liveness  Loudness  Speechiness    Tempo  Time_signature  Key  \\\n",
+      "0     ...    0.2560    -6.655       0.0274   80.609               4    5   \n",
+      "1     ...    0.0541    -7.697       0.0441   91.770               4    5   \n",
+      "2     ...    0.1050    -7.016       0.0273  119.917               4    5   \n",
+      "3     ...    0.0796   -14.606       0.0594  102.072               4    8   \n",
+      "4     ...    0.2170    -5.175       0.0364  133.520               4    4   \n",
+      "...   ...       ...       ...          ...      ...             ...  ...   \n",
+      "3140  ...    0.0883    -9.265       0.0944  120.016               4    0   \n",
+      "3141  ...    0.3780    -7.154       0.0239  103.922               4    0   \n",
+      "3142  ...    0.1710   -10.811       0.3180  140.036               4    9   \n",
+      "3143  ...    0.2340   -18.222       0.2460  168.316               3    9   \n",
+      "3144  ...    0.1230   -14.021       0.0544  180.292               4   11   \n",
+      "\n",
+      "      Duration_ms  Mode  Speechiness.1  Valence  \n",
+      "0          258787     1         0.0274    0.722  \n",
+      "1          388400     1         0.0441    0.817  \n",
+      "2          280040     1         0.0273    0.161  \n",
+      "3          231733     1         0.0594    0.768  \n",
+      "4          292880     1         0.0364    0.259  \n",
+      "...           ...   ...            ...      ...  \n",
+      "3140       238667     1         0.0944    0.670  \n",
+      "3141       205000     1         0.0239    0.287  \n",
+      "3142       196993     0         0.3180    0.621  \n",
+      "3143       148651     1         0.2460    0.308  \n",
+      "3144       198728     1         0.0544    0.249  \n",
+      "\n",
+      "[3145 rows x 21 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "df = pd.concat(map(pd.read_csv, files), ignore_index=True)\n",
+    "print(df)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 136,
+   "id": "b70dcf35",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.to_csv(r'C:\\Users\\iyair\\Desktop\\Song Project\\top90-22.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b3453f34",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6f278970",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2e2d5a11",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "31d69d41",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a9f381b8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Low_Pop = most_streams.loc[lambda most_streams: most_streams['Popularity'] <= 10].sort_values(by=['Popularity'])\n",
+    "Low_Pop.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0e355e6d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "High_Pop = most_streams.loc[lambda most_streams: most_streams['Popularity'] >= 90].sort_values(by=['Popularity'],ascending = False)\n",
+    "High_Pop.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ed633007",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import plotly.express as px"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e9aca37d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "most_streams.dtypes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fe2322ab",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = px.scatter(most_streams,x=most_streams['Tempo'],y=most_streams['Danceability'],\n",
+    "                color=most_streams['Popularity'],size=most_streams['Popularity'],\n",
+    "                title='Scatter plot of Song Popularity using Tempo against Danceability')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "714f003e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pip install plotly"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "41703d4f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import plotly.express as px"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dcf404ef",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = px.scatter(most_streams,x=most_streams['Tempo'],y=most_streams['Danceability'],\n",
+    "                color=most_streams['Popularity'],size=most_streams['Popularity'],\n",
+    "                title='Scatter plot of Song Popularity using Tempo against Danceability')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cfcf4e77",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Popularity_90 = most_streams.loc[lambda most_streams: most_streams['Popularity']>90].sort_values(by=['Popularity'],ascending=False)\n",
+    "fig = px.pie(Popularity_90 , values='Popularity',names = 'Artist',\n",
+    "            title='Popularuty of Songs Greater than 90 by Artist')\n",
+    "fig.update_traces(textposition='inside',textinfo='parcent+label')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6465e1aa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = px.histogram(most_streams , x='Popularity', nbins=10,\n",
+    "                  title='Popularity of Songs in Playlist categorised with 10 bins')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "264f6888",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

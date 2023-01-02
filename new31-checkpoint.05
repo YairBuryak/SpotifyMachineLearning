@@ -1,0 +1,560 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "f705c3b1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import spotipy \n",
+    "import spotipy.oauth2 as ouath2\n",
+    "from spotipy.oauth2 import SpotifyOAuth\n",
+    "from spotipy.oauth2 import SpotifyClientCredentials \n",
+    "import pandas as pd \n",
+    "import time "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "id": "f8027dfb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "auth_manager = SpotifyClientCredentials(client_id = 'd324d881c680454892fcd30fb1133cdf',client_secret = '3799377057814018a1afc3fafcd97fa6')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "44e521bf",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'external_urls': {'spotify': 'https://open.spotify.com/artist/7gOdHgIoIKoe4i9Tta6qdD'},\n",
+       " 'followers': {'href': None, 'total': 6256796},\n",
+       " 'genres': ['boy band', 'dance pop', 'pop', 'post-teen pop'],\n",
+       " 'href': 'https://api.spotify.com/v1/artists/7gOdHgIoIKoe4i9Tta6qdD',\n",
+       " 'id': '7gOdHgIoIKoe4i9Tta6qdD',\n",
+       " 'images': [{'height': 640,\n",
+       "   'url': 'https://i.scdn.co/image/ab6761610000e5eb142120beb4014a7f8abd0cf0',\n",
+       "   'width': 640},\n",
+       "  {'height': 320,\n",
+       "   'url': 'https://i.scdn.co/image/ab67616100005174142120beb4014a7f8abd0cf0',\n",
+       "   'width': 320},\n",
+       "  {'height': 160,\n",
+       "   'url': 'https://i.scdn.co/image/ab6761610000f178142120beb4014a7f8abd0cf0',\n",
+       "   'width': 160}],\n",
+       " 'name': 'Jonas Brothers',\n",
+       " 'popularity': 74,\n",
+       " 'type': 'artist',\n",
+       " 'uri': 'spotify:artist:7gOdHgIoIKoe4i9Tta6qdD'}"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sp = spotipy.Spotify(auth_manager=auth_manager)\n",
+    "artist_info = 'Spotify:artist:7gOdHgIoIKoe4i9Tta6qdD'\n",
+    "artist = sp.artist(artist_info)\n",
+    "artist"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "id": "4eecf145",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "100\n",
+      "['7wZUrN8oemZfsEd1CGkbXE', '49FYlytm3dAAraYgpoJZux', '4N0tDOF2bo9JEpSqLNlpjq', '3Q4WeJmzxuDpzMu9QjQqbM', '4BfRDZLIiznSnwU7DdDL9N', '4RCWB3V8V0dignt99LZ8vH', '3pD0f7hSJg2XdQ6udw5Tey', '07K4GcCDSTiXUF5ssyTRUM', '2bLqfJjuC5syrsgDsZfGmn', '6ic8OlLUNEATToEFU3xmaH', '6ajyEEzWZbw8ycDcJAN099', '1ctdfJSzp6qF2iDAVdDrfl', '2aI21FnmY7TJVKeMaoQZ0t', '0ZUo4YjG4saFnEJhdWp9Bt', '1hGy2eLcmC8eKx7qr1tOqx', '4Tn2llBm1g0UlWctmgPL8Z', '6CFPFnS9EcLs2I0nWqtWci', '45hOioMDJktr86iKDHC8gr', '6Q44rxzH39y2tjic98Spo5', '7EBt4nrQflTtyqbrSWvK5E', '1MBM7CyZbwJpVbbZJnHHRg', '7klL6qvAu4ZzthaUzLvtIN', '3qKGvSu1inEZKwYQnMavNA', '2SDx0PooHZI1SQKR0y44bs', '358bOvBiZCS9fRzNYosw6c', '3l9CW99AHtExIRV4hW2N5m', '5JkTN6THtYH6bpOoHjOysc', '4NeOWqHmlrGRuBvsLJC9rL', '7iu0WYLdo4yksKf3seaxzI', '5kxddRG1RZaZROadk7iC4D', '5Utz5NBlQnUTpiy56fUHfh', '6yLX8QnxlnEqZfs3YKCfjF', '3Zwu2K0Qa5sT6teCCHPShP', '0wbDgMuAoy7O7pL3a69uZx', '12yGwtB2h9NlzeOKYfVYTF', '3RlsVPIIs5KFhLFhxZ4iDF', '1lkvpmrCaXK8QtliFDcHBO', '2aIdVb8v9KTpEZnftkz2mD', '7j31rVgGX9Q2blT92VBEA0', '3N4DI1vuTSX1tz7fa2NQZw', '3wKKkGVn7cVSfgPeYYIiXG', '5lUTzPuiloBHm1qEaJcJfF', '5fVZC9GiM4e8vu99W0Xf6J', '1K6VhaiVOv0I0uDawxyzO7', '4fzsfWzRhPawzqhX8Qt9F3', '1hrsEHe39nYu1pJx0Nrxd7', '1mvZErZBp7WZT3HfGBykao', '0QrfZiv1ARuht0oPwWeyJ2', '2HWWNoWEEEECwZhAiLg7ib', '3PNOYDruQplC92lNc7mE9W', '0JJP0IS4w0fJx01EcrfkDe', '4UPcXTh26ilb7owtuyHqNI', '5hnyJvgoWiQUYZttV4wXy6', '5Yaw45Q7W0irDbTVN5LOVs', '4spfRBAAdrMKR35lZWrgYF', '6GIrIt2M39wEGwjCQjGChX', '4DxybsoSiMUW0JI2oM0SSN', '4T6HLdP6OcAtqC6tGnQelG', '6NncjnSD7JLEetWb9KqMRY', '4ktcqIPjAi7eIZOayEp2UJ', '0TzbmxnYrlMV6dEln2l9nb', '1ycllvcsoxffNpcw2EVCze', '66TRwr5uJwPt15mfFkzhbi', '5iyE2d4U3Vc5cqY9mPTlpy', '538hPQNtP190KcS3ZnWY5M', '3yZNKN3r1USoCVij9VDSh6', '1bxcras2MNcAwHesS1hu98', '54JKnDB3CzVu8wNAOM27BI', '00cxhG668jV6gU6VK2FUVI', '2x8evxqUlF0eRabbW2JBJd', '4liGjmhCupa7RP9JaQELYx', '7KPTwEENcZ5r4KJ6FHmhLP', '0U969xYNlAyfzi8P1TaO7u', '3FAclTFfvUuQYnEsptbK8w', '2IxoxL1FHw0RxN5r6y5mjF', '6NjHHTaPCpCFzajlxk4hlQ', '24NPziq3dayIMKppeI94Um', '1oagRT7LfpVlNJN6FSZDGp', '6kfQDanT6Buh4Wu73ghbav', '265Anh9hGoozFigjUVLUeD', '5Y77SQxEr1eiofPeUTPHxM', '6oUGAx0vkBcnGzYkvw0ZsA', '5TmFTHZp7HjBXjjsFvCY6h', '0Kt0khTz1EzjtaQI8A339S', '5qhlC4Rzals34zxovrPzKp', '1BV0m40U0M4t1SLIsDnwZl', '3k76ukdDzNeLRW41SfcxAr', '2a03afRiyAbNAleOByVju4', '2fAIfPLrPUTW1AmJRR428Q', '3QnEp4rluCxUwgpXT43jmC', '4wzjNqjKAKDU82e8uMhzmr', '28IEbk5a7twNTbUEvWslUb', '2elA6JLRaQ6iB7hxiuTKN4', '6DbqCKweKwVkHgRv1CI53D', '4JL9RdsaNOzotxzBHzjswM', '1JwIBogbuZ4Yfb6nssXWa2', '6TlRNJaezOdzdECnQeRuMM', '1IYaMVfidzSfvCUZYXhsU1', '68Zq7PMcPIQE8ol1x3gAqw', '0YkJU6TjjwzsVXUPRIO0DB']\n"
+     ]
+    }
+   ],
+   "source": [
+    "def getTrackIDs(user, playlist_id):\n",
+    "    track_ids = []\n",
+    "    playlist = sp.user_playlist (user,playlist_id)\n",
+    "    for item in playlist['tracks']['items']:\n",
+    "        track=item['track']\n",
+    "        track_ids.append(track['id'])\n",
+    "    return track_ids\n",
+    "                      \n",
+    "track_ids = getTrackIDs('spotify','37i9dQZF1DX3j9EYdzv2N9')\n",
+    "                      \n",
+    "print(len(track_ids))\n",
+    "print(track_ids)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "id": "ad5cb390",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def getTrackFeatures(id):\n",
+    "    track_info=sp.track(id)\n",
+    "    features_info= sp.audio_features(id)\n",
+    "    \n",
+    "    \n",
+    "    name = track_info['name']\n",
+    "    album = track_info['album']['name']\n",
+    "    artist = track_info['album']['artists'][0]['name']\n",
+    "    release_date = track_info['album']['release_date']\n",
+    "    length = track_info['duration_ms']\n",
+    "    popularity = track_info['popularity']\n",
+    "    \n",
+    "\n",
+    "\n",
+    "    acousticness = features_info[0]['acousticness']\n",
+    "    danceability = features_info[0]['danceability']\n",
+    "    energy = features_info[0]['energy']\n",
+    "    instrumentalness = features_info[0]['instrumentalness']\n",
+    "    liveness = features_info[0]['liveness']\n",
+    "    loudness = features_info[0]['loudness']\n",
+    "    speechiness = features_info[0]['speechiness']\n",
+    "    tempo = features_info[0]['tempo']\n",
+    "    time_signature = features_info[0]['time_signature']\n",
+    "    key = features_info[0]['key']\n",
+    "    duration_ms = features_info[0]['duration_ms']\n",
+    "    mode = features_info[0]['mode']\n",
+    "    speechiness = features_info[0]['speechiness']\n",
+    "    valence = features_info[0]['valence']\n",
+    "    \n",
+    "    track_data = [name,album,artist,release_date,length,popularity,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,tempo,time_signature,key,duration_ms,mode,speechiness,valence]\n",
+    "    return track_data \n",
+    "    \n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "id": "2e7fd0aa",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Name</th>\n",
+       "      <th>Album</th>\n",
+       "      <th>Artist</th>\n",
+       "      <th>Release_date</th>\n",
+       "      <th>Length</th>\n",
+       "      <th>Popularity</th>\n",
+       "      <th>Acousticness</th>\n",
+       "      <th>Danceability</th>\n",
+       "      <th>Energy</th>\n",
+       "      <th>Instrumentalness</th>\n",
+       "      <th>liveness</th>\n",
+       "      <th>Loudness</th>\n",
+       "      <th>Speechiness</th>\n",
+       "      <th>Tempo</th>\n",
+       "      <th>Time_signature</th>\n",
+       "      <th>Key</th>\n",
+       "      <th>Duration_ms</th>\n",
+       "      <th>Mode</th>\n",
+       "      <th>Speechiness</th>\n",
+       "      <th>Valence</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Bleeding Love</td>\n",
+       "      <td>Spirit</td>\n",
+       "      <td>Leona Lewis</td>\n",
+       "      <td>2007</td>\n",
+       "      <td>262466</td>\n",
+       "      <td>74</td>\n",
+       "      <td>0.18800</td>\n",
+       "      <td>0.638</td>\n",
+       "      <td>0.656</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.1460</td>\n",
+       "      <td>-5.886</td>\n",
+       "      <td>0.0357</td>\n",
+       "      <td>104.036</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
+       "      <td>262467</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.0357</td>\n",
+       "      <td>0.225</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Umbrella</td>\n",
+       "      <td>Good Girl Gone Bad: Reloaded</td>\n",
+       "      <td>Rihanna</td>\n",
+       "      <td>2008-06-02</td>\n",
+       "      <td>275986</td>\n",
+       "      <td>80</td>\n",
+       "      <td>0.00864</td>\n",
+       "      <td>0.583</td>\n",
+       "      <td>0.829</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.0426</td>\n",
+       "      <td>-4.603</td>\n",
+       "      <td>0.1340</td>\n",
+       "      <td>174.028</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>275987</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.1340</td>\n",
+       "      <td>0.575</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Glamorous</td>\n",
+       "      <td>The Dutchess</td>\n",
+       "      <td>Fergie</td>\n",
+       "      <td>2006-09-13</td>\n",
+       "      <td>246600</td>\n",
+       "      <td>65</td>\n",
+       "      <td>0.29800</td>\n",
+       "      <td>0.811</td>\n",
+       "      <td>0.757</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.1030</td>\n",
+       "      <td>-6.447</td>\n",
+       "      <td>0.2300</td>\n",
+       "      <td>130.993</td>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>246600</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.2300</td>\n",
+       "      <td>0.565</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Big Girls Don't Cry (Personal)</td>\n",
+       "      <td>The Dutchess</td>\n",
+       "      <td>Fergie</td>\n",
+       "      <td>2006-09-13</td>\n",
+       "      <td>268120</td>\n",
+       "      <td>64</td>\n",
+       "      <td>0.20500</td>\n",
+       "      <td>0.708</td>\n",
+       "      <td>0.641</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.0945</td>\n",
+       "      <td>-4.296</td>\n",
+       "      <td>0.0335</td>\n",
+       "      <td>113.082</td>\n",
+       "      <td>4</td>\n",
+       "      <td>7</td>\n",
+       "      <td>268120</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.0335</td>\n",
+       "      <td>0.253</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Valerie (feat. Amy Winehouse) - Version Revisited</td>\n",
+       "      <td>Version</td>\n",
+       "      <td>Mark Ronson</td>\n",
+       "      <td>2007-06-22</td>\n",
+       "      <td>219413</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.00253</td>\n",
+       "      <td>0.698</td>\n",
+       "      <td>0.844</td>\n",
+       "      <td>0.000426</td>\n",
+       "      <td>0.1240</td>\n",
+       "      <td>-4.789</td>\n",
+       "      <td>0.0544</td>\n",
+       "      <td>105.828</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>219413</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.0544</td>\n",
+       "      <td>0.896</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                                Name  \\\n",
+       "0                                      Bleeding Love   \n",
+       "1                                           Umbrella   \n",
+       "2                                          Glamorous   \n",
+       "3                     Big Girls Don't Cry (Personal)   \n",
+       "4  Valerie (feat. Amy Winehouse) - Version Revisited   \n",
+       "\n",
+       "                          Album       Artist Release_date  Length  Popularity  \\\n",
+       "0                        Spirit  Leona Lewis         2007  262466          74   \n",
+       "1  Good Girl Gone Bad: Reloaded      Rihanna   2008-06-02  275986          80   \n",
+       "2                  The Dutchess       Fergie   2006-09-13  246600          65   \n",
+       "3                  The Dutchess       Fergie   2006-09-13  268120          64   \n",
+       "4                       Version  Mark Ronson   2007-06-22  219413           1   \n",
+       "\n",
+       "   Acousticness  Danceability  Energy  Instrumentalness  liveness  Loudness  \\\n",
+       "0       0.18800         0.638   0.656          0.000000    0.1460    -5.886   \n",
+       "1       0.00864         0.583   0.829          0.000000    0.0426    -4.603   \n",
+       "2       0.29800         0.811   0.757          0.000000    0.1030    -6.447   \n",
+       "3       0.20500         0.708   0.641          0.000000    0.0945    -4.296   \n",
+       "4       0.00253         0.698   0.844          0.000426    0.1240    -4.789   \n",
+       "\n",
+       "   Speechiness    Tempo  Time_signature  Key  Duration_ms  Mode  Speechiness  \\\n",
+       "0       0.0357  104.036               4    5       262467     1       0.0357   \n",
+       "1       0.1340  174.028               4    1       275987     1       0.1340   \n",
+       "2       0.2300  130.993               4    0       246600     1       0.2300   \n",
+       "3       0.0335  113.082               4    7       268120     1       0.0335   \n",
+       "4       0.0544  105.828               4    1       219413     1       0.0544   \n",
+       "\n",
+       "   Valence  \n",
+       "0    0.225  \n",
+       "1    0.575  \n",
+       "2    0.565  \n",
+       "3    0.253  \n",
+       "4    0.896  "
+      ]
+     },
+     "execution_count": 86,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "track_list = []\n",
+    "for i in range(len(track_ids)):\n",
+    "    time.sleep(.3)\n",
+    "    track_data = getTrackFeatures(track_ids[i])\n",
+    "    track_list.append(track_data)\n",
+    "    \n",
+    "most_streams = pd.DataFrame(track_list,columns = ['Name','Album','Artist','Release_date','Length','Popularity',\n",
+    "                                                  'Acousticness','Danceability','Energy','Instrumentalness','liveness',\n",
+    "                                                  'Loudness','Speechiness','Tempo','Time_signature','Key','Duration_ms','Mode','Speechiness','Valence'])   \n",
+    "most_streams.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 87,
+   "id": "c0a44630",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "most_streams.to_csv(r'C:\\Users\\iyair\\Desktop\\Song Project\\CSV_FILES_NEW\\top2007.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a9f381b8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Low_Pop = most_streams.loc[lambda most_streams: most_streams['Popularity'] <= 10].sort_values(by=['Popularity'])\n",
+    "Low_Pop.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0e355e6d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "High_Pop = most_streams.loc[lambda most_streams: most_streams['Popularity'] >= 90].sort_values(by=['Popularity'],ascending = False)\n",
+    "High_Pop.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ed633007",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import plotly.express as px"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e9aca37d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "most_streams.dtypes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fe2322ab",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = px.scatter(most_streams,x=most_streams['Tempo'],y=most_streams['Danceability'],\n",
+    "                color=most_streams['Popularity'],size=most_streams['Popularity'],\n",
+    "                title='Scatter plot of Song Popularity using Tempo against Danceability')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "714f003e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pip install plotly"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "41703d4f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import plotly.express as px"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dcf404ef",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = px.scatter(most_streams,x=most_streams['Tempo'],y=most_streams['Danceability'],\n",
+    "                color=most_streams['Popularity'],size=most_streams['Popularity'],\n",
+    "                title='Scatter plot of Song Popularity using Tempo against Danceability')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cfcf4e77",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Popularity_90 = most_streams.loc[lambda most_streams: most_streams['Popularity']>90].sort_values(by=['Popularity'],ascending=False)\n",
+    "fig = px.pie(Popularity_90 , values='Popularity',names = 'Artist',\n",
+    "            title='Popularuty of Songs Greater than 90 by Artist')\n",
+    "fig.update_traces(textposition='inside',textinfo='parcent+label')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6465e1aa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = px.histogram(most_streams , x='Popularity', nbins=10,\n",
+    "                  title='Popularity of Songs in Playlist categorised with 10 bins')\n",
+    "fig.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dc877863",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sp = spotipy.Spotify(auth_manager=auth_manager)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5ee2ca3f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def getTrackIDs(user, playlist_id):\n",
+    "    track_ids = []\n",
+    "    playlist = sp.user_playlist (user,playlist_id)\n",
+    "    for item in playlist['tracks']['items']:\n",
+    "        track=item['track']\n",
+    "        track_ids.append(track['id'])\n",
+    "    return track_ids\n",
+    "                      \n",
+    "track_ids = getTrackIDs('spotify','37i9dQZF1DX8XZ6AUo9R4R')\n",
+    "                      \n",
+    "print(len(track_ids))\n",
+    "print(track_ids)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d693644f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "most_streams.to_csv(r'C:\\Users\\iyair\\Desktop\\Song Project\\top2016.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "264f6888",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
